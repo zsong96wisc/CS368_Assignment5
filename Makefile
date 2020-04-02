@@ -23,4 +23,4 @@ clean:
 	# For Windows
 	-del demo.o
 	-del InfiniteInt.o
-	-del DemoInfiniteInt
+	-del DemoInfiniteInt.exe
