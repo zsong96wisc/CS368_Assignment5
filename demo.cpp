@@ -27,20 +27,21 @@ int main() {
     cout << endl;
 
     // // Testing copy Op=
-    // std::cout << "Changing value of n2..." << std::endl;
-    // n2 = 3;
-    // std::cout << "n2 should be 3: " << n2 << std::endl;
-    // std::cout << std::endl;
+    cout << "BIG ISSUE TOODODOODOD!!" << endl;
+    std::cout << "Changing value of n2..." << std::endl;
+    n2 = 3;
+    std::cout << "n2 should be 3: " << n2 << std::endl;
+    std::cout << std::endl;
 
-    // // Testing copy constructor
-    // std::cout << "Constructing n3..." << std::endl;
-    // InfiniteInt n3(n2);
-    // std::cout << "n3 should be 3: " << n3 << std::endl;
+    // Testing copy constructor
+    std::cout << "Constructing n3..." << std::endl;
+    InfiniteInt n3(n2);
+    std::cout << "n3 should be 3: " << n3 << std::endl;
 
     // Add more code here to test InfiniteInt here!
 
     // Testing < and > 
-    cout << "Testing < and  > " << endl;
+    cout << endl << "Testing < and  > " << endl;
     InfiniteInt n4(13);
     InfiniteInt n5(40);
 

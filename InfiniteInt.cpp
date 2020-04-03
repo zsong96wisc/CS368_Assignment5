@@ -92,43 +92,43 @@ istream& operator>>(istream &is, const InfiniteInt &rhs) {
     return is;
 }
 
-// TODO - check
+
 bool operator<(const InfiniteInt &lhs, const InfiniteInt &rhs) {
 
     return InfiniteInt::convertVectorToVal(lhs.digits) < InfiniteInt::convertVectorToVal(rhs.digits);
 }
 
-// TODO - check
+
 bool operator>(const InfiniteInt &lhs, const InfiniteInt &rhs) {
 
     return InfiniteInt::convertVectorToVal(lhs.digits) > InfiniteInt::convertVectorToVal(rhs.digits);;
 }
 
-// TODO - check
+
 bool operator<=(const InfiniteInt &lhs, const InfiniteInt &rhs) {
 
     return InfiniteInt::convertVectorToVal(lhs.digits) <= InfiniteInt::convertVectorToVal(rhs.digits);
 }
 
-// TODO - check
+
 bool operator>=(const InfiniteInt &lhs, const InfiniteInt &rhs) {
 
     return InfiniteInt::convertVectorToVal(lhs.digits) >= InfiniteInt::convertVectorToVal(rhs.digits);
 }
 
-// TODO - check
+
 bool operator==(const InfiniteInt &lhs, const InfiniteInt &rhs) {
 
     return InfiniteInt::convertVectorToVal(lhs.digits) == InfiniteInt::convertVectorToVal(rhs.digits);
 }
 
-// TODO - check
+
 bool operator!=(const InfiniteInt &lhs, const InfiniteInt &rhs) {
 
     return !(lhs == rhs);
 }
 
-// TODO - check
+
 InfiniteInt operator+(const InfiniteInt &lhs, const InfiniteInt &rhs) {
     unsigned long long lhsVal = InfiniteInt::convertVectorToVal(lhs.digits);
     unsigned long long rhsVal = InfiniteInt::convertVectorToVal(rhs.digits);
@@ -138,7 +138,7 @@ InfiniteInt operator+(const InfiniteInt &lhs, const InfiniteInt &rhs) {
     return newInt;
 }
 
-// TODO - check
+
 InfiniteInt operator-(const InfiniteInt &lhs, const InfiniteInt &rhs) {
     unsigned long long lhsVal = InfiniteInt::convertVectorToVal(lhs.digits);
     unsigned long long rhsVal = InfiniteInt::convertVectorToVal(rhs.digits);
@@ -152,6 +152,7 @@ InfiniteInt operator-(const InfiniteInt &lhs, const InfiniteInt &rhs) {
 
     return newInt;
 }
+
 
 // TODO - check
 InfiniteInt& InfiniteInt::operator+=(const InfiniteInt &rhs) {
