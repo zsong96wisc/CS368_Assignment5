@@ -15,6 +15,22 @@
 
 #include "InfiniteInt.h"
 
+// TODO delete
+void printDigits(vector<unsigned int> *newDigits) {
+
+    cout << "Printing digits..." << endl;
+    int numDigits = newDigits->size();
+
+    for(int i = 0; i < numDigits; i++) {
+        cout << newDigits->at(i);
+    }
+
+    cout << endl;
+}
+
+
+
+
 vector<unsigned int>* InfiniteInt::getDigits() {
     return digits;
 }
@@ -81,18 +97,10 @@ InfiniteInt::~InfiniteInt() {
 }
 
 ostream& operator<<(ostream &os, const InfiniteInt &rhs) {
-    //     vector<unsigned int>* currDigits1 = rhs.digits;
-    // int numDigits1 = currDigits1->size();
-
-    // for(int j = 0; j < numDigits1; j++) {
-    //     cout <<"value here=" << currDigits1->at(j) << endl;
-    // }
 
     vector<unsigned int>* currDigits = rhs.digits;
-
-    //InfiniteInt::convertVectorToVal(currDigits);
-
     int numDigits = currDigits->size();
+
     for(int i = 0; i < numDigits; i++) {
         os << currDigits->at(i);
     }
@@ -101,8 +109,31 @@ ostream& operator<<(ostream &os, const InfiniteInt &rhs) {
 }
 
 // TODO
-istream& operator>>(istream &is, const InfiniteInt &rhs) {
+istream& operator>>(istream &is, InfiniteInt &rhs) {
 
+    string inputString;
+    is >> inputString;
+
+    char currChar = '0';
+    unsigned int currCharVal = 0;
+    vector<unsigned int>* newDigits = new vector<unsigned int>;
+    for(unsigned int i = 0; i < inputString.size(); i++) {
+        currChar = inputString.at(i);
+        // cout << "currChar = " << currChar << " " << endl;
+        if(isdigit(currChar)) {
+            // cout << "currChar = " << currChar << " " << endl;
+            currCharVal = currChar - '0';
+            newDigits->push_back(currCharVal);
+        } else {
+            cout << "Invalid entry" << endl;
+            delete newDigits;
+            return is;
+        }
+    }
+    // delete old digits and add new ones
+    delete rhs.digits;
+    rhs.digits = newDigits;
+    
     return is;
 }
 
@@ -175,6 +206,7 @@ InfiniteInt operator+(const InfiniteInt &lhs, const InfiniteInt &rhs) {
     // InfiniteInt newInt(lhsVal + rhsVal);
 
     // return newInt;
+    return rhs;
 }
 
 
@@ -190,6 +222,7 @@ InfiniteInt operator-(const InfiniteInt &lhs, const InfiniteInt &rhs) {
     // InfiniteInt newInt(difference);
 
     // return newInt;
+    return rhs;
 }
 
 
@@ -208,14 +241,14 @@ InfiniteInt& InfiniteInt::operator-=(const InfiniteInt &rhs) {
 // TODO
 // pre-fix ++InfiniteInt
 InfiniteInt& InfiniteInt::operator++() {
-
+    *this += 1;
     return *this;
 }
 
 // TODO
 // pre-fix --InfiniteInt
 InfiniteInt& InfiniteInt::operator--() {
-
+    *this -= 1;
     return *this;
 }
 
@@ -241,41 +274,20 @@ InfiniteInt InfiniteInt::operator--(int) {
  * 2 right hand side is bigger
 */
 int InfiniteInt::compareDigitsOfEqualLength(vector<unsigned int> *lhs, vector<unsigned int> *rhs) {
-
-    int designation = 0;
-
-    auto lhsDigit = lhs->begin();
-    auto rhsDigit = rhs->begin();
-
-    while(lhsDigit != lhs->end()) {
-        //cout << "comparing lhsDigit = " << *lhsDigit << " and rhsDigit = " << *rhsDigit << endl;
-        if(*lhsDigit > *rhsDigit) {
+    int index = 0;
+    int size = lhs->size();
+    // cout << "size = " << size << endl;
+    while(index < size) {
+        //cout << "comparing lhsDigit = " << lhs->at(index) << " and rhsDigit = " << rhs->at(index) << endl;
+        if(lhs->at(index) > rhs->at(index)) {
             return 1;
-        } else if (*lhsDigit < *rhsDigit) {
+        } else if (lhs->at(index) < rhs->at(index)) {
             return 2;
         }
-        lhsDigit++;
-        rhsDigit++;
+        index++;
     }
-
-    return designation;
+    return 0;
 }
-
-// // helper method
-// unsigned long long InfiniteInt::convertVectorToVal(vector<unsigned int>* digits) {
-//     unsigned long long val = 0;
-
-//     int lastPos = (digits->size())-1;
-
-
-//     int base = 1;
-//     for(int i = lastPos; i >= 0; i--) {
-//         val += (base * digits->at(i));
-//         base *= 10;
-//     }
-//     // cout << "Here's the value I got from the vector = " << val;
-//     return val;
-// }
 
 
 // helper method
@@ -288,13 +300,21 @@ vector<unsigned int>* InfiniteInt::convertValToVector(unsigned long long val) {
 
     itr = newDigits->begin();
 
+    // cout << "val = " << val << endl;
+    // cout << "radix = " << radix << endl;
     unsigned int currInt = 0;
+
     while (val != 0) {
-        currInt = val % radix;
+        currInt = val % 10;
+
         itr = newDigits->insert(itr,currInt);
-        val = val / radix;
+        // cout << "currInt is = " << currInt << endl;
+        // printDigits(newDigits);
+        val = val / 10;
         itr = newDigits->begin();
     }
+
+    // printDigits(newDigits);
 
     return newDigits;
 }

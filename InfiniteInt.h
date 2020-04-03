@@ -25,7 +25,7 @@ class InfiniteInt {
 
     friend ostream& operator<<(ostream &os, const InfiniteInt &rhs);
     
-    friend istream& operator>>(istream &is, const InfiniteInt &rhs);
+    friend istream& operator>>(istream &is, InfiniteInt &rhs);
 
     friend bool operator<(const InfiniteInt &lhs, const InfiniteInt &rhs);
 
@@ -91,7 +91,7 @@ class InfiniteInt {
         vector<unsigned int>* convertValToVector(unsigned long long val);
 
         vector<unsigned int>* digits;
-        const unsigned int radix = 10;
+        const unsigned int radix{10};
 };
 
 #endif

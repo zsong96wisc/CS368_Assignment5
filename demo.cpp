@@ -41,8 +41,8 @@ int main() {
 
     // Testing < and > 
     cout << endl << "Testing < and  > " << endl;
-    InfiniteInt n4(13);
-    InfiniteInt n5(40);
+    InfiniteInt n4(4087359802512345);
+    InfiniteInt n5(4087359802512346);
 
     if( n4 < n5) {
         cout << "n4=" << n4 << " is LESS than "  << "n5=" << n5 << endl;
@@ -70,14 +70,14 @@ int main() {
         cout << "n7=" << n7 << " is GREATER than "  << "n8=" << n8 << endl;
     }
 
-    // // Testing = and !=
-    // cout << endl << "Testing = and !=" << endl;
-    // if( n6 == n7) {
-    //     cout << "n6=" << n6 << " is EQUAL to "  << "n7=" << n7 << endl;
-    // }
-    // if( n6 != n8) {
-    //     cout << "n6=" << n6 << " is NOT EQUAL to "  << "n8=" << n8 << endl;
-    // }
+    // Testing = and !=
+    cout << endl << "Testing = and !=" << endl;
+    if( n6 == n7) {
+        cout << "n6=" << n6 << " is EQUAL to "  << "n7=" << n7 << endl;
+    }
+    if( n6 != n8) {
+        cout << "n6=" << n6 << " is NOT EQUAL to "  << "n8=" << n8 << endl;
+    }
 
     // // Testing + and -
     // cout << endl << "Testing + and -" << endl;
@@ -90,6 +90,10 @@ int main() {
     // if (difference == (34-25)) {
     //     cout << "n6=" << n6 << " + " << "n8=" << n8 << " = difference=" << difference << endl;
     // }
+
+    cout << endl << "Testing >> by changing n2" << endl;
+    cin >> n2;
+    cout << "the new digits for n2 are " << n2 << endl;
 
     return 0;
 }
