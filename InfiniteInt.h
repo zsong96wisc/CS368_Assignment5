@@ -81,8 +81,14 @@ class InfiniteInt {
 
 
     private:
-        static unsigned long long convertVectorToVal(vector<unsigned int>*);
-        static vector<unsigned int>* convertValToVector(unsigned long long val);
+        /**
+         * return 0, 1, or 2
+         * 0 all chars are equal
+         * 1 left hand side is bigger
+         * 2 right hand side is bigger
+        */
+        static int compareDigitsOfEqualLength(vector<unsigned int>* lhs, vector<unsigned int>* rhs);
+        vector<unsigned int>* convertValToVector(unsigned long long val);
 
         vector<unsigned int>* digits;
         const unsigned int radix = 10;

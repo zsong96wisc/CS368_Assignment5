@@ -27,7 +27,6 @@ int main() {
     cout << endl;
 
     // // Testing copy Op=
-    cout << "BIG ISSUE TOODODOODOD!!" << endl;
     std::cout << "Changing value of n2..." << std::endl;
     n2 = 3;
     std::cout << "n2 should be 3: " << n2 << std::endl;
@@ -71,27 +70,26 @@ int main() {
         cout << "n7=" << n7 << " is GREATER than "  << "n8=" << n8 << endl;
     }
 
-    // Testing = and !=
-    cout << endl << "Testing = and !=" << endl;
-    if( n6 == n7) {
-        cout << "n6=" << n6 << " is EQUAL to "  << "n7=" << n7 << endl;
-    }
-    if( n6 != n8) {
-        cout << "n6=" << n6 << " is NOT EQUAL to "  << "n8=" << n8 << endl;
-    }
+    // // Testing = and !=
+    // cout << endl << "Testing = and !=" << endl;
+    // if( n6 == n7) {
+    //     cout << "n6=" << n6 << " is EQUAL to "  << "n7=" << n7 << endl;
+    // }
+    // if( n6 != n8) {
+    //     cout << "n6=" << n6 << " is NOT EQUAL to "  << "n8=" << n8 << endl;
+    // }
 
-    // Testing + and -
-    cout << endl << "Testing + and -" << endl;
-    InfiniteInt sum = n6 + n7;
-    if (sum == (34+34)) {
-        cout << "n6=" << n6 << " + " << "n7=" << n7 << " = sum=" << sum << endl;
-    }
+    // // Testing + and -
+    // cout << endl << "Testing + and -" << endl;
+    // InfiniteInt sum = n6 + n7;
+    // if (sum == (34+34)) {
+    //     cout << "n6=" << n6 << " + " << "n7=" << n7 << " = sum=" << sum << endl;
+    // }
 
-    InfiniteInt difference = n6 - n8;
-    if (difference == (34-25)) {
-        cout << "n6=" << n6 << " + " << "n8=" << n8 << " = difference=" << difference << endl;
-    }
-
+    // InfiniteInt difference = n6 - n8;
+    // if (difference == (34-25)) {
+    //     cout << "n6=" << n6 << " + " << "n8=" << n8 << " = difference=" << difference << endl;
+    // }
 
     return 0;
 }
