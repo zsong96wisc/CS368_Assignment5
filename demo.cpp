@@ -37,7 +37,60 @@ int main() {
     // InfiniteInt n3(n2);
     // std::cout << "n3 should be 3: " << n3 << std::endl;
 
-    // // Add more code here to test InfiniteInt here!
+    // Add more code here to test InfiniteInt here!
+
+    // Testing < and > 
+    cout << "Testing < and  > " << endl;
+    InfiniteInt n4(13);
+    InfiniteInt n5(40);
+
+    if( n4 < n5) {
+        cout << "n4=" << n4 << " is LESS than "  << "n5=" << n5 << endl;
+    }
+    if(n5 > n4) {
+        cout << "n5=" << n5 << " is GREATER than "  << "n4=" << n4 << endl;
+    }
+
+    InfiniteInt n6(34);
+    InfiniteInt n7(34);
+    InfiniteInt n8(25);
+
+    // Testing <= and >=
+    cout << endl << "Testing <= and  >= " << endl;
+    if( n6 <= n7) {
+        cout << "n6=" << n6 << " is EQUAL to "  << "n7=" << n7 << endl;
+    }
+    if(n8 <= n6) {
+        cout << "n8=" << n8 << " is LESS than "  << "n6=" << n6 << endl;
+    }
+    if( n6 >= n7) {
+        cout << "n6=" << n6 << " is EQUAL to "  << "n7=" << n7 << endl;
+    }
+    if(n7 >= n8) {
+        cout << "n7=" << n7 << " is GREATER than "  << "n8=" << n8 << endl;
+    }
+
+    // Testing = and !=
+    cout << endl << "Testing = and !=" << endl;
+    if( n6 == n7) {
+        cout << "n6=" << n6 << " is EQUAL to "  << "n7=" << n7 << endl;
+    }
+    if( n6 != n8) {
+        cout << "n6=" << n6 << " is NOT EQUAL to "  << "n8=" << n8 << endl;
+    }
+
+    // Testing + and -
+    cout << endl << "Testing + and -" << endl;
+    InfiniteInt sum = n6 + n7;
+    if (sum == (34+34)) {
+        cout << "n6=" << n6 << " + " << "n7=" << n7 << " = sum=" << sum << endl;
+    }
+
+    InfiniteInt difference = n6 - n8;
+    if (difference == (34-25)) {
+        cout << "n6=" << n6 << " + " << "n8=" << n8 << " = difference=" << difference << endl;
+    }
+
 
     return 0;
 }

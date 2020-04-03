@@ -16,11 +16,6 @@ demo.o: demo.cpp InfiniteInt.h
 	$(CXX) $(CXXFLAGS) -c demo.cpp
 
 clean:
-	# For Linux
-	# -rm demo.o
-	# -rm InfiniteInt.o
-	# -rm DemoInfiniteInt
-	# For Windows
 	-del demo.o
 	-del InfiniteInt.o
 	-del DemoInfiniteInt.exe

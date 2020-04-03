@@ -16,8 +16,8 @@
 #ifndef INFINITEINT
 #define INFINITEINT
 
-#include <vector>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -81,7 +81,8 @@ class InfiniteInt {
 
 
     private:
-        vector<unsigned int>* convertValToVector(unsigned long long val);
+        static unsigned long long convertVectorToVal(vector<unsigned int>*);
+        static vector<unsigned int>* convertValToVector(unsigned long long val);
 
         vector<unsigned int>* digits;
         const unsigned int radix = 10;
