@@ -9,74 +9,68 @@
 // CS Login:         lengfeld
 //
 //
-// Online sources:   
+// Online sources:   http://www.cplusplus.com/reference/vector/vector/erase/
 //
 ////////////////////////////////////////////////////////////////////////////////
 
 #include "InfiniteInt.h"
 
-// TODO delete
-void printDigits(vector<unsigned int> *newDigits) {
-
-    cout << "Printing digits..." << endl;
-    int numDigits = newDigits->size();
-
-    for(int i = 0; i < numDigits; i++) {
-        cout << newDigits->at(i);
-    }
-
-    cout << endl;
-}
-
-
-
-
 vector<unsigned int>* InfiniteInt::getDigits() {
-    if(this->digits->size() == 0) {
-        return new vector<unsigned int>;
-    }
     return digits;
 }
 
 
-InfiniteInt::InfiniteInt() : 
-    digits(new vector<unsigned int>(1,0))
-{}
+InfiniteInt::InfiniteInt() {
+    vector<unsigned int>* newDigits = new vector<unsigned int>;
+    newDigits->push_back(0);
+    digits = newDigits;
+}
+
 
 InfiniteInt::InfiniteInt(unsigned long long val) :
     digits(convertValToVector(val))
 {}
 
+
 InfiniteInt::InfiniteInt(vector<unsigned int>* new_digits) :
     digits(new_digits)
 {}
 
-// copy constructor
-InfiniteInt::InfiniteInt(const InfiniteInt &obj) :
-// TODO not sure
-    digits(obj.digits)
-{}
 
-// TODO not sure
+// copy constructor
+InfiniteInt::InfiniteInt(const InfiniteInt &obj) {
+
+    vector<unsigned int>* copyDigits = new vector<unsigned int>;
+
+    vector<unsigned int>* newDigits = obj.digits;
+    int numDigits = newDigits->size();
+
+    for(int i = 0; i < numDigits; i++) {
+        copyDigits->push_back(newDigits->at(i));
+    }
+    
+    digits = copyDigits;
+}
+
+
 InfiniteInt& InfiniteInt::operator=(const InfiniteInt &rhs) {
 
     if(this != &rhs) {
-        // cout << "in here"<< endl;
         delete this->digits;
-
+        vector<unsigned int>* copyDigits = new vector<unsigned int>;
         vector<unsigned int>* newDigits = rhs.digits;
         int numDigits = newDigits->size();
-
         for(int i = 0; i < numDigits; i++) {
-            this->digits->at(i) = newDigits->at(i);
+            copyDigits->push_back(newDigits->at(i));
         }
+        this->digits = copyDigits;
     }
 
     return *this;
 }
 
 InfiniteInt::~InfiniteInt() {
-    delete InfiniteInt::digits;
+    delete this->digits;
 }
 
 
@@ -93,7 +87,6 @@ ostream& operator<<(ostream &os, const InfiniteInt &rhs) {
 }
 
 
-// TODO
 istream& operator>>(istream &is, InfiniteInt &rhs) {
 
     string inputString;
@@ -122,7 +115,7 @@ istream& operator>>(istream &is, InfiniteInt &rhs) {
     return is;
 }
 
-// done
+
 bool operator<(const InfiniteInt &lhs, const InfiniteInt &rhs) {
 
     if(lhs.digits->size() < rhs.digits->size()) {
@@ -138,7 +131,7 @@ bool operator<(const InfiniteInt &lhs, const InfiniteInt &rhs) {
     return false;
 }
 
-// done
+
 bool operator>(const InfiniteInt &lhs, const InfiniteInt &rhs) {
 
     if(lhs.digits->size() > rhs.digits->size()) {
@@ -154,14 +147,14 @@ bool operator>(const InfiniteInt &lhs, const InfiniteInt &rhs) {
     return false;
 }
 
-// done
+
 bool operator<=(const InfiniteInt &lhs, const InfiniteInt &rhs) {
 
     return !(lhs > rhs);
 
 }
 
-// done
+
 bool operator>=(const InfiniteInt &lhs, const InfiniteInt &rhs) {
 
     return !(lhs < rhs);
@@ -270,6 +263,30 @@ InfiniteInt operator-(const InfiniteInt &lhs, const InfiniteInt &rhs) {
         }
         // printDigits(difference);
     }
+
+    // remove extra zeros
+    // auto it = difference->begin();
+    // int index = 0;
+    // while(it !=  difference->end()) {
+    //     cout << *it << endl;
+    //     if(*it == 0){
+    //         difference->erase(difference->begin()+index);
+    //     } else {
+    //         break;
+    //     }
+    //     it++;
+    //     index++;
+    // }
+    int size = difference->size();
+    int numZeros = 0;
+    for(int i = 0; i < size; i++) {
+        if(difference->at(i) == 0) {
+            numZeros++;
+        } else {
+            break;
+        }
+    }
+    difference->erase(difference->begin(),difference->begin()+numZeros);
 
     InfiniteInt diffInt(difference);
 
@@ -382,16 +399,13 @@ vector<unsigned int>* InfiniteInt::calculateSum(vector<unsigned int> *lhs,vector
             }
             indexOfRHS--;
         }
+        itr = sum->insert(itr,digitToAdd);
+        itr = sum->begin();
 
-        if(indexOfLHS != 0) {
-            itr = sum->insert(itr,digitToAdd);
-            itr = sum->begin();
-        } else if (digitToAdd != 0) {
-            itr = sum->insert(itr,digitToAdd);
-            itr = sum->begin();
-        }
     }
-
+    if (carry == 1) {
+        itr = sum->insert(itr,carry);
+    }
     return sum;
 }
 
@@ -400,6 +414,10 @@ vector<unsigned int>* InfiniteInt::calculateSum(vector<unsigned int> *lhs,vector
 vector<unsigned int>* InfiniteInt::convertValToVector(unsigned long long val) {
 
     vector<unsigned int> *newDigits = new vector<unsigned int>;
+    if( val == 0) {
+        newDigits->push_back(0);
+        return newDigits;
+    }
 
     // iterator to insert at the beginning of vector
     vector<unsigned int>::iterator itr;
