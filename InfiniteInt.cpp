@@ -261,22 +261,8 @@ InfiniteInt operator-(const InfiniteInt &lhs, const InfiniteInt &rhs) {
             itr = difference->insert(itr,digitToAdd);
             itr = difference->begin();
         }
-        // printDigits(difference);
     }
 
-    // remove extra zeros
-    // auto it = difference->begin();
-    // int index = 0;
-    // while(it !=  difference->end()) {
-    //     cout << *it << endl;
-    //     if(*it == 0){
-    //         difference->erase(difference->begin()+index);
-    //     } else {
-    //         break;
-    //     }
-    //     it++;
-    //     index++;
-    // }
     int size = difference->size();
     int numZeros = 0;
     for(int i = 0; i < size; i++) {
@@ -423,22 +409,13 @@ vector<unsigned int>* InfiniteInt::convertValToVector(unsigned long long val) {
     vector<unsigned int>::iterator itr;
 
     itr = newDigits->begin();
-
-    // cout << "val = " << val << endl;
-    // cout << "radix = " << radix << endl;
     unsigned int currInt = 0;
-
     while (val != 0) {
         currInt = val % 10;
-
         itr = newDigits->insert(itr,currInt);
-        // cout << "currInt is = " << currInt << endl;
-        // printDigits(newDigits);
         val = val / 10;
         itr = newDigits->begin();
     }
-
-    // printDigits(newDigits);
 
     return newDigits;
 }
