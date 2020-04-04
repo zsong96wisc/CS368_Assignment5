@@ -32,6 +32,9 @@ void printDigits(vector<unsigned int> *newDigits) {
 
 
 vector<unsigned int>* InfiniteInt::getDigits() {
+    if(this->digits->size() == 0) {
+        return new vector<unsigned int>;
+    }
     return digits;
 }
 
@@ -56,19 +59,6 @@ InfiniteInt::InfiniteInt(const InfiniteInt &obj) :
 
 // TODO not sure
 InfiniteInt& InfiniteInt::operator=(const InfiniteInt &rhs) {
-    // vector<unsigned int>* currDigits = rhs.digits;
-    // int numDigits = currDigits->size();
-    // cout << "numDigits " << numDigits << endl;
-    // for(int i = 0; i < numDigits; i++) {
-    //     cout <<"value here=" << currDigits->at(i) << endl;
-    // }
-
-    // vector<unsigned int>* currDigits2 = this->digits;
-    // int numDigits2 = currDigits2->size();
-
-    // for(int k = 0; k < numDigits2; k++) {
-    //     cout <<"value here of this original=" << currDigits2->at(k) << endl;
-    // }
 
     if(this != &rhs) {
         // cout << "in here"<< endl;
@@ -82,19 +72,13 @@ InfiniteInt& InfiniteInt::operator=(const InfiniteInt &rhs) {
         }
     }
 
-    // vector<unsigned int>* currDigits1 = this->digits;
-    // int numDigits1 = currDigits1->size();
-
-    // for(int j = 0;  j < numDigits1; j++) {
-    //     cout <<"value here in this=" << currDigits1->at(j) << endl;
-    // }
-
     return *this;
 }
 
 InfiniteInt::~InfiniteInt() {
     delete InfiniteInt::digits;
 }
+
 
 ostream& operator<<(ostream &os, const InfiniteInt &rhs) {
 
@@ -108,20 +92,20 @@ ostream& operator<<(ostream &os, const InfiniteInt &rhs) {
     return os;
 }
 
+
 // TODO
 istream& operator>>(istream &is, InfiniteInt &rhs) {
 
     string inputString;
     is >> inputString;
 
+    vector<unsigned int>* newDigits = new vector<unsigned int>;
     char currChar = '0';
     unsigned int currCharVal = 0;
-    vector<unsigned int>* newDigits = new vector<unsigned int>;
     for(unsigned int i = 0; i < inputString.size(); i++) {
         currChar = inputString.at(i);
-        // cout << "currChar = " << currChar << " " << endl;
+
         if(isdigit(currChar)) {
-            // cout << "currChar = " << currChar << " " << endl;
             currCharVal = currChar - '0';
             newDigits->push_back(currCharVal);
         } else {
@@ -129,11 +113,12 @@ istream& operator>>(istream &is, InfiniteInt &rhs) {
             delete newDigits;
             return is;
         }
+
     }
     // delete old digits and add new ones
     delete rhs.digits;
     rhs.digits = newDigits;
-    
+
     return is;
 }
 
@@ -200,72 +185,141 @@ bool operator!=(const InfiniteInt &lhs, const InfiniteInt &rhs) {
 
 
 InfiniteInt operator+(const InfiniteInt &lhs, const InfiniteInt &rhs) {
-    // unsigned long long lhsVal = InfiniteInt::convertVectorToVal(lhs.digits);
-    // unsigned long long rhsVal = InfiniteInt::convertVectorToVal(rhs.digits);
+    vector<unsigned int> *sum;
 
-    // InfiniteInt newInt(lhsVal + rhsVal);
+    if (lhs.digits->size() >= rhs.digits->size()) {
 
-    // return newInt;
-    return rhs;
+        sum = InfiniteInt::calculateSum(lhs.digits, rhs.digits);
+
+    } else {
+        sum = InfiniteInt::calculateSum(rhs.digits, lhs.digits);
+    }
+
+    InfiniteInt sumInt(sum);
+
+    return sumInt;
 }
 
 
 InfiniteInt operator-(const InfiniteInt &lhs, const InfiniteInt &rhs) {
-    // unsigned long long lhsVal = InfiniteInt::convertVectorToVal(lhs.digits);
-    // unsigned long long rhsVal = InfiniteInt::convertVectorToVal(rhs.digits);
-    // unsigned long long difference;
-    // if (rhsVal >= lhsVal) {
-    //     difference = 0;
-    // } else {
-    //     difference = lhsVal - rhsVal;
-    // }
-    // InfiniteInt newInt(difference);
 
-    // return newInt;
-    return rhs;
+    if(lhs <= rhs) {
+        return InfiniteInt();
+    }
+
+    vector<unsigned int> *difference = new vector<unsigned int>;
+
+    int sizeOfLHS = lhs.digits->size()-1;
+    int indexOfRHS = rhs.digits->size()-1;
+
+    unsigned int digitToAdd = 0;
+    unsigned int varL = 0;
+    unsigned int varR = 0;
+    unsigned int carry = 0;
+    vector<unsigned int>::iterator itr;
+
+    itr = difference->begin();
+
+    for(int indexOfLHS = sizeOfLHS; indexOfLHS >= 0; indexOfLHS--) {
+        if(indexOfRHS == -1) {
+
+            varL = lhs.digits->at(indexOfLHS);
+            if (carry == 1) {
+                if(varL == 0) {
+                    varL = 9;
+                    // cause it was 0, carry wasn't satisfied
+                    carry = 1;
+                } else {
+                    varL -= 1;
+                    carry = 0;
+                }
+            }
+            digitToAdd = varL;
+
+        } else {
+
+            varL = lhs.digits->at(indexOfLHS);
+            varR = rhs.digits->at(indexOfRHS);
+            if (carry == 1) {
+                if(varL == 0) {
+                    varL = 9;
+                    // cause it was 0, carry wasn't satisfied
+                    carry = 1;
+                } else {
+                    varL -= 1;
+                    carry = 0;
+                }
+            }
+
+            if(varL >= varR) {
+                digitToAdd = varL - varR;
+            } else {
+                digitToAdd = (varL + 10) - varR;
+                carry = 1;
+            }
+
+            indexOfRHS--;
+
+        }
+        if(indexOfLHS != 0) {
+            itr = difference->insert(itr,digitToAdd);
+            itr = difference->begin();
+        } else if (digitToAdd != 0) {
+            itr = difference->insert(itr,digitToAdd);
+            itr = difference->begin();
+        }
+        // printDigits(difference);
+    }
+
+    InfiniteInt diffInt(difference);
+
+    return diffInt;
 }
 
 
-// TODO
 InfiniteInt& InfiniteInt::operator+=(const InfiniteInt &rhs) {
     *this = *this + rhs;
     return *this;
 }
 
-// TODO
+
 InfiniteInt& InfiniteInt::operator-=(const InfiniteInt &rhs) {
     *this = *this - rhs;
     return *this;
 }
 
-// TODO
+
 // pre-fix ++InfiniteInt
 InfiniteInt& InfiniteInt::operator++() {
     *this += 1;
     return *this;
 }
 
-// TODO
+
 // pre-fix --InfiniteInt
 InfiniteInt& InfiniteInt::operator--() {
     *this -= 1;
     return *this;
 }
 
-// TODO
+
 // post-fix InfiniteInt++
 InfiniteInt InfiniteInt::operator++(int) {
-
-    return *this;
+    InfiniteInt toReturn(*this);
+    ++(*this);
+    return toReturn;
 }
 
-// TODO
+
 // post-fix InfiniteInt++
 InfiniteInt InfiniteInt::operator--(int) {
-
-    return *this;
+    InfiniteInt toReturn(*this);
+    --(*this);
+    return toReturn;
 }
 
+
+// ------------------ HELPER METHODS ---------------------------- //
 
 /**
  * return 0, 1, or 2
@@ -287,6 +341,58 @@ int InfiniteInt::compareDigitsOfEqualLength(vector<unsigned int> *lhs, vector<un
         index++;
     }
     return 0;
+}
+
+
+// helper method
+vector<unsigned int>* InfiniteInt::calculateSum(vector<unsigned int> *lhs,vector<unsigned int> *rhs) {
+
+    vector<unsigned int> *sum = new vector<unsigned int>;
+    int indexOfLHS = lhs->size()-1;
+    int indexOfRHS = rhs->size()-1;
+
+    unsigned int digitToAdd = 0;
+    unsigned int varL = 0;
+    unsigned int varR = 0;
+    unsigned int carry = 0;
+
+    vector<unsigned int>::iterator itr;
+
+    itr = sum->begin();
+    for (; indexOfLHS >= 0; indexOfLHS--) {
+        if(indexOfRHS == -1) {
+            
+            varL = lhs->at(indexOfLHS);
+            digitToAdd = varL + carry;
+            carry = 0;
+            if (digitToAdd > 9) {
+                digitToAdd = digitToAdd % 10;
+                carry = 1;
+            }
+
+        } else {
+            varL = lhs->at(indexOfLHS);
+            varR = rhs->at(indexOfRHS);
+            digitToAdd = varL + varR + carry;
+            carry = 0;
+
+            if (digitToAdd > 9) {
+                digitToAdd = digitToAdd % 10;
+                carry = 1;
+            }
+            indexOfRHS--;
+        }
+
+        if(indexOfLHS != 0) {
+            itr = sum->insert(itr,digitToAdd);
+            itr = sum->begin();
+        } else if (digitToAdd != 0) {
+            itr = sum->insert(itr,digitToAdd);
+            itr = sum->begin();
+        }
+    }
+
+    return sum;
 }
 
 

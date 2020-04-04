@@ -88,6 +88,7 @@ class InfiniteInt {
          * 2 right hand side is bigger
         */
         static int compareDigitsOfEqualLength(vector<unsigned int>* lhs, vector<unsigned int>* rhs);
+        static vector<unsigned int>* calculateSum(vector<unsigned int> *,vector<unsigned int> *);
         vector<unsigned int>* convertValToVector(unsigned long long val);
 
         vector<unsigned int>* digits;
