@@ -143,5 +143,27 @@ int main() {
         cout << "n13 was 57 and now is = "  << n13 << endl; 
     }
 
+    // Testing Pre and Post Increment (++)
+    cout << endl << "Testing (++)Pre and Post Increment(++) " << endl;
+    cout << "n1= " << n1 << " before pre-increment" << endl;
+    ++n1;
+    cout << "n1= " << n1 << " after pre-increment" << endl;
+
+    cout << "n2= " << n2 << " before post-increment" << endl;
+    n2++;
+    cout << "n2= " << n2 << " after post-increment" << endl;
+
+    // Testing Pre and Post decrement
+    cout << endl << "Testing (--)Pre and Post Decrement(--)" << endl;
+    n1 = 1;
+    cout << "n1= " << n1 << " before pre-decrement" << endl;
+    --n1;
+    cout << "n1= " << n1 << " after pre-decrement" << endl;
+
+    n2 = 100;
+    cout << "n2= " << n2 << " before post-decrement" << endl;
+    n2--;
+    cout << "n2= " << n2 << " after post-decrement" << endl;
+
     return 0;
 }

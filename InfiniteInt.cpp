@@ -10,6 +10,7 @@
 //
 //
 // Online sources:   http://www.cplusplus.com/reference/vector/vector/erase/
+//                   CS368_OperatorOverload slides
 //
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -20,25 +21,28 @@ vector<unsigned int>* InfiniteInt::getDigits() {
 }
 
 
-InfiniteInt::InfiniteInt() {
-    vector<unsigned int>* newDigits = new vector<unsigned int>;
-    newDigits->push_back(0);
-    digits = newDigits;
-}
+InfiniteInt::InfiniteInt() :
+    digits(new vector<unsigned int>(1,0)),
+    radix(10)
+{}
 
 
 InfiniteInt::InfiniteInt(unsigned long long val) :
-    digits(convertValToVector(val))
+    digits(convertValToVector(val, 10)),
+    radix(10)
 {}
 
 
 InfiniteInt::InfiniteInt(vector<unsigned int>* new_digits) :
-    digits(new_digits)
+    digits(new_digits),
+    radix(10)
 {}
 
 
 // copy constructor
-InfiniteInt::InfiniteInt(const InfiniteInt &obj) {
+InfiniteInt::InfiniteInt(const InfiniteInt &obj) :
+    radix(10)
+{
 
     vector<unsigned int>* copyDigits = new vector<unsigned int>;
 
@@ -181,11 +185,11 @@ InfiniteInt operator+(const InfiniteInt &lhs, const InfiniteInt &rhs) {
     vector<unsigned int> *sum;
 
     if (lhs.digits->size() >= rhs.digits->size()) {
-
-        sum = InfiniteInt::calculateSum(lhs.digits, rhs.digits);
+        // calculate sum
+        sum = InfiniteInt::calculateSum(lhs.digits, rhs.digits, lhs.radix);
 
     } else {
-        sum = InfiniteInt::calculateSum(rhs.digits, lhs.digits);
+        sum = InfiniteInt::calculateSum(rhs.digits, lhs.digits, lhs.radix);
     }
 
     InfiniteInt sumInt(sum);
@@ -247,7 +251,7 @@ InfiniteInt operator-(const InfiniteInt &lhs, const InfiniteInt &rhs) {
             if(varL >= varR) {
                 digitToAdd = varL - varR;
             } else {
-                digitToAdd = (varL + 10) - varR;
+                digitToAdd = (varL + lhs.radix) - varR;
                 carry = 1;
             }
 
@@ -333,9 +337,9 @@ InfiniteInt InfiniteInt::operator--(int) {
 int InfiniteInt::compareDigitsOfEqualLength(vector<unsigned int> *lhs, vector<unsigned int> *rhs) {
     int index = 0;
     int size = lhs->size();
-    // cout << "size = " << size << endl;
+
     while(index < size) {
-        //cout << "comparing lhsDigit = " << lhs->at(index) << " and rhsDigit = " << rhs->at(index) << endl;
+
         if(lhs->at(index) > rhs->at(index)) {
             return 1;
         } else if (lhs->at(index) < rhs->at(index)) {
@@ -348,7 +352,7 @@ int InfiniteInt::compareDigitsOfEqualLength(vector<unsigned int> *lhs, vector<un
 
 
 // helper method
-vector<unsigned int>* InfiniteInt::calculateSum(vector<unsigned int> *lhs,vector<unsigned int> *rhs) {
+vector<unsigned int>* InfiniteInt::calculateSum(vector<unsigned int> *lhs,vector<unsigned int> *rhs, const unsigned int radix) {
 
     vector<unsigned int> *sum = new vector<unsigned int>;
     int indexOfLHS = lhs->size()-1;
@@ -369,7 +373,7 @@ vector<unsigned int>* InfiniteInt::calculateSum(vector<unsigned int> *lhs,vector
             digitToAdd = varL + carry;
             carry = 0;
             if (digitToAdd > 9) {
-                digitToAdd = digitToAdd % 10;
+                digitToAdd = digitToAdd % radix;
                 carry = 1;
             }
 
@@ -380,7 +384,7 @@ vector<unsigned int>* InfiniteInt::calculateSum(vector<unsigned int> *lhs,vector
             carry = 0;
 
             if (digitToAdd > 9) {
-                digitToAdd = digitToAdd % 10;
+                digitToAdd = digitToAdd % radix;
                 carry = 1;
             }
             indexOfRHS--;
@@ -397,7 +401,7 @@ vector<unsigned int>* InfiniteInt::calculateSum(vector<unsigned int> *lhs,vector
 
 
 // helper method
-vector<unsigned int>* InfiniteInt::convertValToVector(unsigned long long val) {
+vector<unsigned int>* InfiniteInt::convertValToVector(unsigned long long val, const unsigned int radix) {
 
     vector<unsigned int> *newDigits = new vector<unsigned int>;
     if( val == 0) {
@@ -411,10 +415,12 @@ vector<unsigned int>* InfiniteInt::convertValToVector(unsigned long long val) {
     itr = newDigits->begin();
     unsigned int currInt = 0;
     while (val != 0) {
-        currInt = val % 10;
+
+        currInt = val % radix;
         itr = newDigits->insert(itr,currInt);
-        val = val / 10;
+        val = val / radix;
         itr = newDigits->begin();
+
     }
 
     return newDigits;
