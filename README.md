@@ -2,7 +2,7 @@ Author: Ethan Lengfeld
 9074020836
 README file for Assignment 5 - InfiniteInt
 
-# Assignment 3: InfiniteInt
+# Assignment 5: InfiniteInt
 The files in Assignment 5 consist of demo.cpp which is used as a test class to demo 
 all methods defined within InfiniteInt.h and developed in InfiniteInt.cpp.
 
