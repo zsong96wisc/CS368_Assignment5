@@ -17,14 +17,10 @@ To remove executable and any .o files run the command 'make clean'
 Warning! This will delete the executable and will require rerunning 'make' to retest it
 
 ## Code Organization
-TODO!!!!!!!!!!!!!!!!!!!!!!
-# TODO!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!!!!!!!!!!!!!!!!!!!!! change This!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-InfiniteInt.h defines four possible methods available to read in a grade file, format
-student names, calculate student score totals and percents, and write relevant student
-information to an output file.
-
 InfiniteInt.cpp implements all functions defined in InfiniteInt.h.
+
+InfiniteInt.cpp will implement all operator overloads specified in the 
+InfiniteInt.h header file.
 
 Finally, demo. cpp will handle all commands given during program execution this is 
 done through the use of the main() function.
